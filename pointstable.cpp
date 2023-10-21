@@ -1,6 +1,9 @@
 #include "pointstable.h"
 #include "ui_pointstable.h"
 #include "mainwindow.h"
+#include <string>
+#include <sstream>
+#include <regex>
 
 PointsTable::PointsTable(QWidget *parent) :
     QWidget(parent),
@@ -8,6 +11,7 @@ PointsTable::PointsTable(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::Stretch);
+    connect(ui->tableWidget, &QTableWidget::cellChanged, this, &PointsTable::CalculateValue);
 }
 
 PointsTable::~PointsTable()
@@ -75,4 +79,50 @@ void PointsTable::SaveToFile(const QString& fileName)
 void PointsTable::ReTranslate()
 {
     ui->retranslateUi(this);
+}
+
+int calculateExpression(const std::string& expression) {
+    std::istringstream iss(expression);
+    char op;
+    int num1, num2;
+    iss >> num1 >> op >> num2;
+
+    switch (op) {
+    case '+':
+        return num1 + num2;
+    case '-':
+        return num1 - num2;
+    case '*':
+        return num1 * num2;
+    case '/':
+        if (num2 != 0) {
+            return num1 / num2;
+        }
+        else {
+            std::cerr << "Error: Division by zero" << std::endl;
+            return 0;
+        }
+    default:
+        std::cerr << "Error: Invalid operator" << std::endl;
+        return 0;
+    }
+}
+
+bool isValidExpressionFormat(const std::string& expression)
+{
+    std::regex pattern("\\d+[-+*/]\\d+");
+    return std::regex_match(expression, pattern);
+}
+
+void PointsTable::CalculateValue(int row, int columns)
+{
+    if ((columns == ColumnList::WinMatches) || (columns == ColumnList::Points))
+    {
+        auto str = ui->tableWidget->item(row, columns)->text().toStdString();
+        if (isValidExpressionFormat(str))
+        {
+            int value = calculateExpression(ui->tableWidget->item(row, columns)->text().toStdString());
+            ui->tableWidget->setItem(row, columns, new QTableWidgetItem(QString::fromStdString(std::to_string(value))));
+        }
+    }
 }

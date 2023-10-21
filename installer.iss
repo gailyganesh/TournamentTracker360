@@ -20,16 +20,16 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=D:\BadmitonSoftware\Raw\LICENSE.txt
+LicenseFile=installer/LICENSE.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputDir=D:\BadmitonSoftware\Installer\New folder
+OutputDir=output
 OutputBaseFilename=TournamentTracker360
-SetupIconFile=D:\Trainings\Qt\Tournament\logo.ico
+SetupIconFile=logo.ico
 Compression=lzma
 SolidCompression=yes
-WizardSmallImageFile=D:\BadmitonSoftware\Raw\logo.bmp
+WizardSmallImageFile=installer\logo.bmp
 WizardStyle=modern
 
 [Languages]
@@ -40,28 +40,28 @@ Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "D:\BadmitonSoftware\Raw\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\D3Dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\msvcp140.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\opengl32sw.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\Qt6Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\Qt6Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\Qt6Network.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\Qt6Pdf.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\Qt6Svg.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\Qt6Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\Tournament_de_DE.qm"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\vcruntime140.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\vcruntime140_1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\BadmitonSoftware\Raw\generic\*"; DestDir: "{app}/generic"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "D:\BadmitonSoftware\Raw\iconengines\*"; DestDir: "{app}/iconengines"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "D:\BadmitonSoftware\Raw\imageformats\*"; DestDir: "{app}/imageformats"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "D:\BadmitonSoftware\Raw\networkinformation\*"; DestDir: "{app}/networkinformation"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "D:\BadmitonSoftware\Raw\platforms\*"; DestDir: "{app}/platforms"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "D:\BadmitonSoftware\Raw\styles\*"; DestDir: "{app}/styles"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "D:\BadmitonSoftware\Raw\tls\*"; DestDir: "{app}/tls"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "D:\BadmitonSoftware\Raw\translations\*"; DestDir: "{app}/translations"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "installer\D3Dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\msvcp140.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\opengl32sw.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\Qt6Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\Qt6Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\Qt6Network.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\Qt6Pdf.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\Qt6Svg.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\Qt6Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\Tournament_de_DE.qm"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\vcruntime140.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\vcruntime140_1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "installer\generic\*"; DestDir: "{app}/generic"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "installer\iconengines\*"; DestDir: "{app}/iconengines"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "installer\imageformats\*"; DestDir: "{app}/imageformats"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "installer\networkinformation\*"; DestDir: "{app}/networkinformation"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "installer\platforms\*"; DestDir: "{app}/platforms"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "installer\styles\*"; DestDir: "{app}/styles"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "installer\tls\*"; DestDir: "{app}/tls"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "installer\translations\*"; DestDir: "{app}/translations"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

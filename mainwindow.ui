@@ -6,12 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1034</width>
-    <height>770</height>
+    <width>1005</width>
+    <height>710</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>TournamentTracker360</string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>30</width>
+    <height>30</height>
+   </size>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -37,6 +43,9 @@
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>6</number>
+            </property>
             <item>
              <widget class="QLabel" name="label_2">
               <property name="text">
@@ -49,8 +58,20 @@
             </item>
             <item>
              <widget class="QToolButton" name="fileToolButton">
+              <property name="baseSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="text">
                <string>...</string>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
               </property>
              </widget>
             </item>
@@ -297,11 +318,21 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1034</width>
-     <height>21</height>
+     <width>1005</width>
+     <height>26</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
    <widget class="QMenu" name="menuFile">
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="title">
      <string>File</string>
     </property>
@@ -328,6 +359,11 @@
    <property name="text">
     <string>Save Player List</string>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionSave_Schedule">
    <property name="icon">
@@ -336,6 +372,11 @@
    </property>
    <property name="text">
     <string>Save Schedule</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionSave_Points_Table">
@@ -346,14 +387,24 @@
    <property name="text">
     <string>Save Points Table</string>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionLoad">
    <property name="icon">
     <iconset resource="Images.qrc">
-     <normaloff>:/assets/load.png</normaloff>:/assets/load.png</iconset>
+     <normaloff>:/assets/upload_color.png</normaloff>:/assets/upload_color.png</iconset>
    </property>
    <property name="text">
     <string>Load</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionEnglish">
@@ -364,6 +415,11 @@
    <property name="text">
     <string>English</string>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionDeutsch">
    <property name="icon">
@@ -372,6 +428,11 @@
    </property>
    <property name="text">
     <string>Deutsch</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
  </widget>

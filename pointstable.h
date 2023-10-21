@@ -30,6 +30,8 @@ public:
     void ResetPointTable();
     void SaveToFile(const QString& fileName);
     void ReTranslate();
+public slots:
+    void CalculateValue(int row, int column);
 };
 
 #endif // POINTSTABLE_H

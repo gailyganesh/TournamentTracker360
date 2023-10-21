@@ -67,6 +67,7 @@ void MainWindow::on_doneButton_clicked()
         return;
     }
     bool isRepeatationAllowed=false;
+    mCreator.GenerateTeams();
     if(!mCreator.IsMatchCalculationPossible())
     {
         QMessageBox::StandardButton reply=QMessageBox::question(this,tr("Error"),tr("Without repeatation couldn't create Matches. Do you want continue with repeatation?"),QMessageBox::Yes |QMessageBox::No);
@@ -130,7 +131,9 @@ void MainWindow::CreateSchedule(bool isRepeatationAllowed)
     for(int match=0; match<mCreator.mMatches.size(); match++)
     {
         auto match_ = mCreator.mMatches[match];
-        QString value=QString::fromStdString(match_.first.mName+"("+std::to_string(match_.first.mNumber)+")"+" vs "+match_.second.mName+"("+std::to_string(match_.second.mNumber)+")");
+        QString value=QString::fromStdString(match_.first.mMembers[0].mName+"("+std::to_string(match_.first.mMembers[0].mNumber)+")"+"&"+match_.first.mMembers[1].mName+"("+std::to_string(match_.first.mMembers[1].mNumber)+")"+
+                                               " vs "
+                                               +match_.second.mMembers[0].mName+"("+std::to_string(match_.second.mMembers[0].mNumber)+")"+"&"+match_.second.mMembers[1].mName+"("+std::to_string(match_.second.mMembers[1].mNumber)+")");
         std::cout<<value.toStdString()<<std::endl;
         sch->AddData(value);
     }
@@ -285,6 +288,14 @@ void MainWindow::on_actionEnglish_triggered()
     if(!translator.isEmpty())
     {
         qApp->removeTranslator(&translator);
+        if(sch!=nullptr)
+        {
+            sch->ReTranslate();
+        }
+        if(pointsTable!=nullptr)
+        {
+            pointsTable->ReTranslate();
+        }
         ui->retranslateUi(this);
     }
 }
@@ -298,6 +309,14 @@ void MainWindow::on_actionDeutsch_triggered()
         if (translator.load(baseName+".qm"))
         {
             qApp->installTranslator(&translator);
+            if(sch!=nullptr)
+            {
+                sch->ReTranslate();
+            }
+            if(pointsTable!=nullptr)
+            {
+                pointsTable->ReTranslate();
+            }
             ui->retranslateUi(this);
             return;
         }

@@ -96,7 +96,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="338"/>
-        <location filename="mainwindow.cpp" line="193"/>
+        <location filename="mainwindow.cpp" line="196"/>
         <location filename="../build-Tournament-Desktop_Qt_6_5_2_MSVC2019_64bit-Debug/TournamentTracker360_autogen/include/ui_mainwindow.h" line="273"/>
         <source>Save Schedule</source>
         <translatorcomment>Spielplan speichern</translatorcomment>
@@ -104,7 +104,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="347"/>
-        <location filename="mainwindow.cpp" line="203"/>
+        <location filename="mainwindow.cpp" line="206"/>
         <location filename="../build-Tournament-Desktop_Qt_6_5_2_MSVC2019_64bit-Debug/TournamentTracker360_autogen/include/ui_mainwindow.h" line="274"/>
         <source>Save Points Table</source>
         <translatorcomment>Punkte-Tabelle speichern</translatorcomment>
@@ -134,11 +134,11 @@
     <message>
         <location filename="mainwindow.cpp" line="61"/>
         <location filename="mainwindow.cpp" line="66"/>
-        <location filename="mainwindow.cpp" line="72"/>
-        <location filename="mainwindow.cpp" line="118"/>
-        <location filename="mainwindow.cpp" line="191"/>
-        <location filename="mainwindow.cpp" line="201"/>
-        <location filename="mainwindow.cpp" line="246"/>
+        <location filename="mainwindow.cpp" line="73"/>
+        <location filename="mainwindow.cpp" line="119"/>
+        <location filename="mainwindow.cpp" line="194"/>
+        <location filename="mainwindow.cpp" line="204"/>
+        <location filename="mainwindow.cpp" line="249"/>
         <source>Error</source>
         <oldsource>&amp;Error</oldsource>
         <translatorcomment>Fehler</translatorcomment>
@@ -172,60 +172,60 @@
         <translation>Mindestens zwei Spieler werden benötigt, um das Spiel zu erstellen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="72"/>
+        <location filename="mainwindow.cpp" line="73"/>
         <source>Without repeatation couldn&apos;t create Matches. Do you want continue with repeatation?</source>
         <translatorcomment>Ohne Wiederholung kann man keine Matches erstellen. Möchten Sie mit der Wiederholung fortfahren?</translatorcomment>
         <translation>Ohne Wiederholung kann man keine Matches erstellen. Möchten Sie mit der Wiederholung fortfahren?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="117"/>
+        <location filename="mainwindow.cpp" line="118"/>
         <source>Already player exist: </source>
         <oldsource>&amp;Already player exist: </oldsource>
         <translatorcomment>Es gibt bereits Spieler:</translatorcomment>
         <translation>Es gibt bereits Spieler:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="138"/>
+        <location filename="mainwindow.cpp" line="141"/>
         <source>Schedules</source>
         <oldsource>&amp;Schedules</oldsource>
         <translatorcomment>Spielpläne</translatorcomment>
         <translation>Spielpläne</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="146"/>
+        <location filename="mainwindow.cpp" line="149"/>
         <source>PointsTables</source>
         <oldsource>&amp;PointsTables</oldsource>
         <translatorcomment>Punkte-Tabelle</translatorcomment>
         <translation>Punkte-Tabelle</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="175"/>
+        <location filename="mainwindow.cpp" line="178"/>
         <source>Load Players List</source>
         <oldsource>&amp;Load Players List</oldsource>
         <translatorcomment>Spielerliste laden</translatorcomment>
         <translation>Spielerliste laden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="183"/>
+        <location filename="mainwindow.cpp" line="186"/>
         <source>Save Players List</source>
         <oldsource>&amp;Save Players List</oldsource>
         <translatorcomment>Spieler-Liste speichern</translatorcomment>
         <translation>Spieler-Liste speichern</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="191"/>
+        <location filename="mainwindow.cpp" line="194"/>
         <source>Schedule Tab is Not Available</source>
         <translatorcomment>Tab &quot;Spielplan&quot; ist nicht verfügbar</translatorcomment>
         <translation>Tab &quot;Spielplan&quot; ist nicht verfügbar</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="201"/>
+        <location filename="mainwindow.cpp" line="204"/>
         <source>Points Table Tab is Not Available</source>
         <translatorcomment>Tab &quot;Punkte-Tabelle&quot; ist nicht verfügbar</translatorcomment>
         <translation>Tab &quot;Punkte-Tabelle&quot; ist nicht verfügbar</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="246"/>
+        <location filename="mainwindow.cpp" line="249"/>
         <source>File is corruputed</source>
         <translatorcomment>Datei ist beschädigt</translatorcomment>
         <translation>Datei ist beschädigt</translation>
@@ -241,14 +241,14 @@
         <translation type="vanished">&amp;Tab &quot;Punkte-Tabelle&quot; ist nicht verfügbar</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="214"/>
+        <location filename="mainwindow.cpp" line="217"/>
         <source>player number</source>
         <oldsource>&amp;player number</oldsource>
         <translatorcomment>Spieler-Nummer</translatorcomment>
         <translation>Spieler-Nummer</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="215"/>
+        <location filename="mainwindow.cpp" line="218"/>
         <source>Enter player name</source>
         <oldsource>&amp;Enter player name</oldsource>
         <translatorcomment>Spieler-Name</translatorcomment>
