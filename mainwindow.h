@@ -5,7 +5,7 @@
 #include <QTableWidgetItem>
 #include <QLocale>
 #include <QTranslator>
-#include "backendToCreateMatch.h"
+#include "MatchCreator.h"
 #include "Schedule.h"
 #include "pointstable.h"
 
@@ -44,6 +44,8 @@ private slots:
 
     void on_actionDeutsch_triggered();
 
+    void on_actionSave_All_in_One_triggered();
+
 private:
     Ui::MainWindow *ui;
     Schedule *sch=nullptr;
@@ -54,7 +56,7 @@ private:
     QTranslator translator;
 
 
-    Base::Match::MatchCreator mCreator;
+    tournament_manager::backend::matchCreatorLib::Base::Match::MatchCreator mCreator;
     enum ColumnList:int
     {
         PlayerNumber=0,

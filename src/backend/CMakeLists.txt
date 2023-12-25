@@ -1,0 +1,2 @@
+add_subdirectory(matchCreatorLib)
+add_subdirectory(readWriteLib)

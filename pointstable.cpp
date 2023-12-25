@@ -19,7 +19,7 @@ PointsTable::~PointsTable()
     delete ui;
 }
 
-void PointsTable::CreatePointsTable(Base::Match::MatchCreator& creator)
+void PointsTable::CreatePointsTable(tournament_manager::backend::matchCreatorLib::Base::Match::MatchCreator& creator)
 {
     for (int player=0; player<creator.mPlayersList.size(); player++)
     {

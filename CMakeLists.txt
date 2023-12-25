@@ -9,6 +9,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 
@@ -22,6 +24,7 @@ set(PROJECT_SOURCES
         ${TS_FILES}
 )
 
+add_subdirectory(src)
 set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/icon.rc")
 
 # Define target properties for Android with Qt 6 as:
@@ -33,8 +36,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(TournamentTracker360
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        backendToCreateMatch.cpp
-        backendToCreateMatch.h
+        # backendToCreateMatch.cpp
+        # backendToCreateMatch.h
         schedule.h schedule.cpp schedule.ui
         pointstable.h pointstable.cpp pointstable.ui
         Images.qrc
@@ -74,7 +77,8 @@ FetchContent_MakeAvailable(QXlsx)
 #target_link_libraries(myapp PRIVATE QXlsx::QXlsx)
 
 target_link_libraries(TournamentTracker360 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
-    PRIVATE QXlsx::QXlsx)
+    PRIVATE QXlsx::QXlsx
+    PRIVATE MatchCreator)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

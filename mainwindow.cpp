@@ -22,6 +22,91 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::on_actionLoad_triggered()
+{
+    QString fileName= QFileDialog::getOpenFileName(this, tr("Load Players List"), QDir::homePath(),"*.xlsx");
+    QFile file(fileName);
+    ui->lineEdit->setText(fileName);
+    ReadPlayerList(fileName);
+}
+
+void MainWindow::on_actionSave_Player_List_triggered()
+{
+    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Players List"), QDir::homePath(),"*.xlsx");
+    Common::WriteTableDataToFile(ui->tableWidget, fileName);
+}
+
+void MainWindow::on_actionSave_Schedule_triggered()
+{
+    if(sch==nullptr)
+    {
+        QMessageBox::critical(this,tr("Error"), tr("Schedule Tab is Not Available"));
+    }
+    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Schedule"), QDir::homePath(),"*.xlsx");
+    sch->SaveToFile(fileName);
+}
+
+void MainWindow::on_actionSave_Points_Table_triggered()
+{
+    if(pointsTable==nullptr)
+    {
+        QMessageBox::critical(this,tr("Error"), tr("Points Table Tab is Not Available"));
+    }
+    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Points Table"), QDir::homePath(),"*.xlsx");
+    pointsTable->SaveToFile(fileName);
+}
+
+void MainWindow::on_actionEnglish_triggered()
+{
+    if(!translator.isEmpty())
+    {
+        qApp->removeTranslator(&translator);
+        if(sch!=nullptr)
+        {
+            sch->ReTranslate();
+        }
+        if(pointsTable!=nullptr)
+        {
+            pointsTable->ReTranslate();
+        }
+        ui->retranslateUi(this);
+    }
+}
+
+void MainWindow::on_actionDeutsch_triggered()
+{
+    if(translator.isEmpty())
+    {
+        const QString baseName = "Tournament_de_DE";
+        if (translator.load(baseName+".qm"))
+        {
+            qApp->installTranslator(&translator);
+            if(sch!=nullptr)
+            {
+                sch->ReTranslate();
+            }
+            if(pointsTable!=nullptr)
+            {
+                pointsTable->ReTranslate();
+            }
+            ui->retranslateUi(this);
+            return;
+        }
+    }
+    qApp->installTranslator(&translator);
+    ui->retranslateUi(this);
+}
+
+void MainWindow::on_actionSave_All_in_One_triggered()
+{
+    if(pointsTable==nullptr)
+    {
+        QMessageBox::critical(this,tr("Error"), tr("Points Table Tab is Not Available"));
+    }
+    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Points Table"), QDir::homePath(),"*.xlsx");
+    pointsTable->SaveToFile(fileName);
+}
+
 void MainWindow::on_addButton_clicked()
 {
     AddPlayerToTable();
@@ -173,40 +258,6 @@ void MainWindow::ResetScheduleIfRequired()
     }
 }
 
-void MainWindow::on_actionLoad_triggered()
-{
-    QString fileName= QFileDialog::getOpenFileName(this, tr("Load Players List"), QDir::homePath(),"*.xlsx");
-    QFile file(fileName);
-    ui->lineEdit->setText(fileName);
-    ReadPlayerList(fileName);
-}
-
-void MainWindow::on_actionSave_Player_List_triggered()
-{
-    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Players List"), QDir::homePath(),"*.xlsx");
-    Common::WriteTableDataToFile(ui->tableWidget, fileName);
-}
-
-void MainWindow::on_actionSave_Schedule_triggered()
-{
-    if(sch==nullptr)
-    {
-        QMessageBox::critical(this,tr("Error"), tr("Schedule Tab is Not Available"));
-    }
-    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Schedule"), QDir::homePath(),"*.xlsx");
-    sch->SaveToFile(fileName);
-}
-
-void MainWindow::on_actionSave_Points_Table_triggered()
-{
-    if(pointsTable==nullptr)
-    {
-        QMessageBox::critical(this,tr("Error"), tr("Points Table Tab is Not Available"));
-    }
-    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Points Table"), QDir::homePath(),"*.xlsx");
-    pointsTable->SaveToFile(fileName);
-}
-
 void MainWindow::AddPlayerToTable(std::string number,std::string name)
 {
     uint rowCount=ui->tableWidget->rowCount();
@@ -282,46 +333,3 @@ void Common::WriteTableDataToFile(QTableWidget* tableWidget, const QString& file
     }
     xlsxW.saveAs(fileName); // save the document as 'Test.xlsx'
 }
-
-void MainWindow::on_actionEnglish_triggered()
-{
-    if(!translator.isEmpty())
-    {
-        qApp->removeTranslator(&translator);
-        if(sch!=nullptr)
-        {
-            sch->ReTranslate();
-        }
-        if(pointsTable!=nullptr)
-        {
-            pointsTable->ReTranslate();
-        }
-        ui->retranslateUi(this);
-    }
-}
-
-
-void MainWindow::on_actionDeutsch_triggered()
-{
-    if(translator.isEmpty())
-    {
-        const QString baseName = "Tournament_de_DE";
-        if (translator.load(baseName+".qm"))
-        {
-            qApp->installTranslator(&translator);
-            if(sch!=nullptr)
-            {
-                sch->ReTranslate();
-            }
-            if(pointsTable!=nullptr)
-            {
-                pointsTable->ReTranslate();
-            }
-            ui->retranslateUi(this);
-            return;
-        }
-    }
-    qApp->installTranslator(&translator);
-    ui->retranslateUi(this);
-}
-
