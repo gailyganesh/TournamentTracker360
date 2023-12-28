@@ -1,2 +1,2 @@
-add_subdirectory(matchCreatorLib)
-add_subdirectory(readWriteLib)
+add_subdirectory(excelManager)
+add_subdirectory(matchCreator)

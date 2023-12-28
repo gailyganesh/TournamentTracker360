@@ -6,11 +6,11 @@
 #include<iostream>
 #include<vector>
 
-namespace tournament_manager
+namespace tournamentManager
 {
 namespace backend
 {
-namespace matchCreatorLib
+namespace matchCreator
 {
 namespace Base
 {
@@ -74,6 +74,6 @@ namespace Base
 } //Base
 } //matchCreatorLib
 } //backend
-} //tournament_manager
+} //tournamentManager
 
 #endif // MATCHCREATOR_H

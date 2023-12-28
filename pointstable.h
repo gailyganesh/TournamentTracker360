@@ -26,9 +26,10 @@ private:
         Points=3
     };
 public:
-    void CreatePointsTable(tournament_manager::backend::matchCreatorLib::Base::Match::MatchCreator& creator);
+    void CreatePointsTable(tournamentManager::backend::matchCreator::Base::Match::MatchCreator& creator);
     void ResetPointTable();
     void SaveToFile(const QString& fileName);
+    bool LoadFromFile(const QString& fileName);
     void ReTranslate();
 public slots:
     void CalculateValue(int row, int column);

@@ -337,6 +337,8 @@
      <string>File</string>
     </property>
     <addaction name="actionLoad"/>
+    <addaction name="actionLoad_All"/>
+    <addaction name="separator"/>
     <addaction name="actionSave_Player_List"/>
     <addaction name="actionSave_Schedule"/>
     <addaction name="actionSave_Points_Table"/>
@@ -400,7 +402,7 @@
      <normaloff>:/assets/upload_color.png</normaloff>:/assets/upload_color.png</iconset>
    </property>
    <property name="text">
-    <string>Load</string>
+    <string>Load Player List</string>
    </property>
    <property name="font">
     <font>
@@ -443,6 +445,15 @@
    </property>
    <property name="text">
     <string>Save All in One</string>
+   </property>
+  </action>
+  <action name="actionLoad_All">
+   <property name="icon">
+    <iconset resource="Images.qrc">
+     <normaloff>:/assets/upload_color.png</normaloff>:/assets/upload_color.png</iconset>
+   </property>
+   <property name="text">
+    <string>Load All</string>
    </property>
   </action>
  </widget>

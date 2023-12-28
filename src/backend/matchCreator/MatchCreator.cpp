@@ -7,7 +7,7 @@
 
 static constexpr uint8_t NO_OF_PLAYERS_IN_TEAM=2;
 
-using namespace tournament_manager::backend::matchCreatorLib;
+using namespace tournamentManager::backend::matchCreator;
 using namespace Base::Match;
 
 // Function to calculate the factorial of a number

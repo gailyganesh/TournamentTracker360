@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <regex>
+#include "xlsxdocument.h"
 
 PointsTable::PointsTable(QWidget *parent) :
     QWidget(parent),
@@ -19,7 +20,7 @@ PointsTable::~PointsTable()
     delete ui;
 }
 
-void PointsTable::CreatePointsTable(tournament_manager::backend::matchCreatorLib::Base::Match::MatchCreator& creator)
+void PointsTable::CreatePointsTable(tournamentManager::backend::matchCreator::Base::Match::MatchCreator& creator)
 {
     for (int player=0; player<creator.mPlayersList.size(); player++)
     {
@@ -74,6 +75,30 @@ void PointsTable::ResetPointTable()
 void PointsTable::SaveToFile(const QString& fileName)
 {
     Common::WriteTableDataToFile(ui->tableWidget,fileName);
+}
+
+bool PointsTable::LoadFromFile(const QString& fileName)
+{
+    ResetPointTable();
+    QXlsx::Document xlsx(fileName);
+
+    if(xlsx.load() && xlsx.selectSheet("PointsTable"))
+    {
+        int No_Row=xlsx.dimension().rowCount();
+        int No_Column=xlsx.dimension().columnCount();
+        for(int row_id=2; row_id<=No_Row; ++row_id)
+        {
+            uint rowCount=ui->tableWidget->rowCount();
+            ui->tableWidget->setRowCount(rowCount+1);
+            for(int col_id=1; col_id<=No_Column;++col_id)
+            {
+                auto item = new QTableWidgetItem(xlsx.read(row_id,col_id).toString());
+                ui->tableWidget->setItem(rowCount,col_id-1,item);
+            }
+        }
+        return true;
+    }
+    return false;
 }
 
 void PointsTable::ReTranslate()

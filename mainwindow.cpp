@@ -24,10 +24,34 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionLoad_triggered()
 {
+    ResetPlayersList();
     QString fileName= QFileDialog::getOpenFileName(this, tr("Load Players List"), QDir::homePath(),"*.xlsx");
     QFile file(fileName);
     ui->lineEdit->setText(fileName);
-    ReadPlayerList(fileName);
+    LoadPlayerListFromFile(fileName);
+}
+
+void MainWindow::on_actionLoad_All_triggered()
+{
+    QString fileName= QFileDialog::getOpenFileName(this, tr("Load Players List"), QDir::homePath(),"*.xlsx");
+    QFile file(fileName);
+    ui->lineEdit->setText(fileName);
+    ResetPlayersList();
+    LoadPlayerListFromFile(fileName);
+    ResetScheduleIfRequired();
+    ResetPointsTableIfRequired();
+    ui->tabWidget->addTab(sch, tr("Schedules"));
+    if(!sch->LoadFromFile(fileName))
+    {
+        QMessageBox::critical(this,tr("Error"), tr("Schedule Sheet is Not Available"));
+    }
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+
+    ui->tabWidget->addTab(pointsTable, tr("PointsTable"));
+    if(!pointsTable->LoadFromFile(fileName))
+    {
+        QMessageBox::critical(this,tr("Error"), tr("PointsTable Sheet is Not Available"));
+    }
 }
 
 void MainWindow::on_actionSave_Player_List_triggered()
@@ -54,6 +78,23 @@ void MainWindow::on_actionSave_Points_Table_triggered()
     }
     QString fileName= QFileDialog::getSaveFileName(this, tr("Save Points Table"), QDir::homePath(),"*.xlsx");
     pointsTable->SaveToFile(fileName);
+}
+
+void MainWindow::on_actionSave_All_in_One_triggered()
+{
+    if(sch==nullptr)
+    {
+        QMessageBox::critical(this,tr("Error"), tr("Schedule Tab is Not Available"));
+    }
+    if(pointsTable==nullptr)
+    {
+        QMessageBox::critical(this,tr("Error"), tr("Points Table Tab is Not Available"));
+    }
+    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Points Table"), QDir::homePath(),"*.xlsx");
+
+    pointsTable->SaveToFile(fileName);
+    sch->SaveToFile(fileName);
+    Common::WriteTableDataToFile(ui->tableWidget, fileName);
 }
 
 void MainWindow::on_actionEnglish_triggered()
@@ -95,16 +136,6 @@ void MainWindow::on_actionDeutsch_triggered()
     }
     qApp->installTranslator(&translator);
     ui->retranslateUi(this);
-}
-
-void MainWindow::on_actionSave_All_in_One_triggered()
-{
-    if(pointsTable==nullptr)
-    {
-        QMessageBox::critical(this,tr("Error"), tr("Points Table Tab is Not Available"));
-    }
-    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Points Table"), QDir::homePath(),"*.xlsx");
-    pointsTable->SaveToFile(fileName);
 }
 
 void MainWindow::on_addButton_clicked()
@@ -234,6 +265,14 @@ void MainWindow::CreatePointsTable()
     ui->tabWidget->addTab(pointsTable, tr("PointsTables"));
 }
 
+void MainWindow::ResetPlayersList()
+{
+    while(ui->tableWidget->rowCount()!=0)
+    {
+        ui->tableWidget->removeRow(0);
+    }
+}
+
 void MainWindow::ResetPointsTableIfRequired()
 {
     if (pointsTable==nullptr)
@@ -254,7 +293,7 @@ void MainWindow::ResetScheduleIfRequired()
     }
     else
     {
-        sch->Reset(); //done clicked not first time
+        sch->ResetSchedule(); //done clicked not first time
     }
 }
 
@@ -279,11 +318,11 @@ void MainWindow::AddPlayerToTable(std::string number,std::string name)
     }
 }
 
-void MainWindow::ReadPlayerList(const QString& fileName)
+void MainWindow::LoadPlayerListFromFile(const QString& fileName)
 {
     QXlsx::Document xlsx(fileName);
 
-    if(xlsx.load())
+    if(xlsx.load() && xlsx.selectSheet("playerList"))
     {
         int No_Row=xlsx.dimension().rowCount();
         int No_Column=xlsx.dimension().columnCount();
@@ -315,7 +354,7 @@ void MainWindow::ReadPlayerList(const QString& fileName)
 
 void Common::WriteTableDataToFile(QTableWidget* tableWidget, const QString& fileName)
 {
-    QXlsx::Document xlsxW;
+    QXlsx::Document xlsxW(fileName);
     xlsxW.addSheet(tableWidget->parent()->objectName());
     for(int col=0;col<tableWidget->columnCount();col++)
     {
