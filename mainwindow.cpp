@@ -22,6 +22,122 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::on_actionLoad_triggered()
+{
+    ResetPlayersList();
+    QString fileName= QFileDialog::getOpenFileName(this, tr("Load Players List"), QDir::homePath(),"*.xlsx");
+    QFile file(fileName);
+    ui->lineEdit->setText(fileName);
+    LoadPlayerListFromFile(fileName);
+}
+
+void MainWindow::on_actionLoad_All_triggered()
+{
+    QString fileName= QFileDialog::getOpenFileName(this, tr("Load Players List"), QDir::homePath(),"*.xlsx");
+    QFile file(fileName);
+    ui->lineEdit->setText(fileName);
+    ResetPlayersList();
+    LoadPlayerListFromFile(fileName);
+    ResetScheduleIfRequired();
+    ResetPointsTableIfRequired();
+    ui->tabWidget->addTab(sch, tr("Schedules"));
+    if(!sch->LoadFromFile(fileName))
+    {
+        QMessageBox::critical(this,tr("Error"), tr("Schedule Sheet is Not Available"));
+    }
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+
+    ui->tabWidget->addTab(pointsTable, tr("PointsTable"));
+    if(!pointsTable->LoadFromFile(fileName))
+    {
+        QMessageBox::critical(this,tr("Error"), tr("PointsTable Sheet is Not Available"));
+    }
+}
+
+void MainWindow::on_actionSave_Player_List_triggered()
+{
+    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Players List"), QDir::homePath(),"*.xlsx");
+    Common::WriteTableDataToFile(ui->tableWidget, fileName);
+}
+
+void MainWindow::on_actionSave_Schedule_triggered()
+{
+    if(sch==nullptr)
+    {
+        QMessageBox::critical(this,tr("Error"), tr("Schedule Tab is Not Available"));
+    }
+    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Schedule"), QDir::homePath(),"*.xlsx");
+    sch->SaveToFile(fileName);
+}
+
+void MainWindow::on_actionSave_Points_Table_triggered()
+{
+    if(pointsTable==nullptr)
+    {
+        QMessageBox::critical(this,tr("Error"), tr("Points Table Tab is Not Available"));
+    }
+    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Points Table"), QDir::homePath(),"*.xlsx");
+    pointsTable->SaveToFile(fileName);
+}
+
+void MainWindow::on_actionSave_All_in_One_triggered()
+{
+    if(sch==nullptr)
+    {
+        QMessageBox::critical(this,tr("Error"), tr("Schedule Tab is Not Available"));
+    }
+    if(pointsTable==nullptr)
+    {
+        QMessageBox::critical(this,tr("Error"), tr("Points Table Tab is Not Available"));
+    }
+    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Points Table"), QDir::homePath(),"*.xlsx");
+
+    pointsTable->SaveToFile(fileName);
+    sch->SaveToFile(fileName);
+    Common::WriteTableDataToFile(ui->tableWidget, fileName);
+}
+
+void MainWindow::on_actionEnglish_triggered()
+{
+    if(!translator.isEmpty())
+    {
+        qApp->removeTranslator(&translator);
+        if(sch!=nullptr)
+        {
+            sch->ReTranslate();
+        }
+        if(pointsTable!=nullptr)
+        {
+            pointsTable->ReTranslate();
+        }
+        ui->retranslateUi(this);
+    }
+}
+
+void MainWindow::on_actionDeutsch_triggered()
+{
+    if(translator.isEmpty())
+    {
+        const QString baseName = "Tournament_de_DE";
+        if (translator.load(baseName+".qm"))
+        {
+            qApp->installTranslator(&translator);
+            if(sch!=nullptr)
+            {
+                sch->ReTranslate();
+            }
+            if(pointsTable!=nullptr)
+            {
+                pointsTable->ReTranslate();
+            }
+            ui->retranslateUi(this);
+            return;
+        }
+    }
+    qApp->installTranslator(&translator);
+    ui->retranslateUi(this);
+}
+
 void MainWindow::on_addButton_clicked()
 {
     AddPlayerToTable();
@@ -67,6 +183,7 @@ void MainWindow::on_doneButton_clicked()
         return;
     }
     bool isRepeatationAllowed=false;
+    mCreator.GenerateTeams();
     if(!mCreator.IsMatchCalculationPossible())
     {
         QMessageBox::StandardButton reply=QMessageBox::question(this,tr("Error"),tr("Without repeatation couldn't create Matches. Do you want continue with repeatation?"),QMessageBox::Yes |QMessageBox::No);
@@ -130,7 +247,9 @@ void MainWindow::CreateSchedule(bool isRepeatationAllowed)
     for(int match=0; match<mCreator.mMatches.size(); match++)
     {
         auto match_ = mCreator.mMatches[match];
-        QString value=QString::fromStdString(match_.first.mName+"("+std::to_string(match_.first.mNumber)+")"+" vs "+match_.second.mName+"("+std::to_string(match_.second.mNumber)+")");
+        QString value=QString::fromStdString(match_.first.mMembers[0].mName+"("+std::to_string(match_.first.mMembers[0].mNumber)+")"+"&"+match_.first.mMembers[1].mName+"("+std::to_string(match_.first.mMembers[1].mNumber)+")"+
+                                               " vs "
+                                               +match_.second.mMembers[0].mName+"("+std::to_string(match_.second.mMembers[0].mNumber)+")"+"&"+match_.second.mMembers[1].mName+"("+std::to_string(match_.second.mMembers[1].mNumber)+")");
         std::cout<<value.toStdString()<<std::endl;
         sch->AddData(value);
     }
@@ -144,6 +263,14 @@ void MainWindow::CreatePointsTable()
     ResetPointsTableIfRequired();
     pointsTable->CreatePointsTable(mCreator);
     ui->tabWidget->addTab(pointsTable, tr("PointsTables"));
+}
+
+void MainWindow::ResetPlayersList()
+{
+    while(ui->tableWidget->rowCount()!=0)
+    {
+        ui->tableWidget->removeRow(0);
+    }
 }
 
 void MainWindow::ResetPointsTableIfRequired()
@@ -166,42 +293,8 @@ void MainWindow::ResetScheduleIfRequired()
     }
     else
     {
-        sch->Reset(); //done clicked not first time
+        sch->ResetSchedule(); //done clicked not first time
     }
-}
-
-void MainWindow::on_actionLoad_triggered()
-{
-    QString fileName= QFileDialog::getOpenFileName(this, tr("Load Players List"), QDir::homePath(),"*.xlsx");
-    QFile file(fileName);
-    ui->lineEdit->setText(fileName);
-    ReadPlayerList(fileName);
-}
-
-void MainWindow::on_actionSave_Player_List_triggered()
-{
-    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Players List"), QDir::homePath(),"*.xlsx");
-    Common::WriteTableDataToFile(ui->tableWidget, fileName);
-}
-
-void MainWindow::on_actionSave_Schedule_triggered()
-{
-    if(sch==nullptr)
-    {
-        QMessageBox::critical(this,tr("Error"), tr("Schedule Tab is Not Available"));
-    }
-    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Schedule"), QDir::homePath(),"*.xlsx");
-    sch->SaveToFile(fileName);
-}
-
-void MainWindow::on_actionSave_Points_Table_triggered()
-{
-    if(pointsTable==nullptr)
-    {
-        QMessageBox::critical(this,tr("Error"), tr("Points Table Tab is Not Available"));
-    }
-    QString fileName= QFileDialog::getSaveFileName(this, tr("Save Points Table"), QDir::homePath(),"*.xlsx");
-    pointsTable->SaveToFile(fileName);
 }
 
 void MainWindow::AddPlayerToTable(std::string number,std::string name)
@@ -225,11 +318,11 @@ void MainWindow::AddPlayerToTable(std::string number,std::string name)
     }
 }
 
-void MainWindow::ReadPlayerList(const QString& fileName)
+void MainWindow::LoadPlayerListFromFile(const QString& fileName)
 {
     QXlsx::Document xlsx(fileName);
 
-    if(xlsx.load())
+    if(xlsx.load() && xlsx.selectSheet("playerList"))
     {
         int No_Row=xlsx.dimension().rowCount();
         int No_Column=xlsx.dimension().columnCount();
@@ -261,7 +354,7 @@ void MainWindow::ReadPlayerList(const QString& fileName)
 
 void Common::WriteTableDataToFile(QTableWidget* tableWidget, const QString& fileName)
 {
-    QXlsx::Document xlsxW;
+    QXlsx::Document xlsxW(fileName);
     xlsxW.addSheet(tableWidget->parent()->objectName());
     for(int col=0;col<tableWidget->columnCount();col++)
     {
@@ -279,30 +372,3 @@ void Common::WriteTableDataToFile(QTableWidget* tableWidget, const QString& file
     }
     xlsxW.saveAs(fileName); // save the document as 'Test.xlsx'
 }
-
-void MainWindow::on_actionEnglish_triggered()
-{
-    if(!translator.isEmpty())
-    {
-        qApp->removeTranslator(&translator);
-        ui->retranslateUi(this);
-    }
-}
-
-
-void MainWindow::on_actionDeutsch_triggered()
-{
-    if(translator.isEmpty())
-    {
-        const QString baseName = "Tournament_de_DE";
-        if (translator.load(baseName+".qm"))
-        {
-            qApp->installTranslator(&translator);
-            ui->retranslateUi(this);
-            return;
-        }
-    }
-    qApp->installTranslator(&translator);
-    ui->retranslateUi(this);
-}
-

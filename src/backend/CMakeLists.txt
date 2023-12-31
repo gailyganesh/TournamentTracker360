@@ -1,0 +1,2 @@
+add_subdirectory(excelManager)
+add_subdirectory(matchCreator)

@@ -16,7 +16,8 @@ public:
     ~Schedule();
     void AddData(const QString& value);
     void SaveToFile(const QString& fileName);
-    void Reset();
+    bool LoadFromFile(const QString& fileName);
+    void ResetSchedule();
     void ReTranslate();
 
 private:

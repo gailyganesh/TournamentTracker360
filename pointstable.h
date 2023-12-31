@@ -2,7 +2,7 @@
 #define POINTSTABLE_H
 
 #include <QWidget>
-#include"backendToCreateMatch.h"
+#include "MatchCreator.h"
 
 namespace Ui {
 class PointsTable;
@@ -26,10 +26,13 @@ private:
         Points=3
     };
 public:
-    void CreatePointsTable(Base::Match::MatchCreator& creator);
+    void CreatePointsTable(tournamentManager::backend::matchCreator::Base::Match::MatchCreator& creator);
     void ResetPointTable();
     void SaveToFile(const QString& fileName);
+    bool LoadFromFile(const QString& fileName);
     void ReTranslate();
+public slots:
+    void CalculateValue(int row, int column);
 };
 
 #endif // POINTSTABLE_H
